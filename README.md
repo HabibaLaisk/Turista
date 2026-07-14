@@ -1,2 +1,2 @@
-# FinderApp
-Finder App
+# Turista
+Turista App
