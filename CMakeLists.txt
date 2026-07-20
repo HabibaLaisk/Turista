@@ -21,6 +21,8 @@ qt_add_qml_module(appTurista
     URI Turista
     QML_FILES
         Main.qml
+        QML_FILES LoginPage.qml
+        QML_FILES AccountCreation.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
