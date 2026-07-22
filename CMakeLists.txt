@@ -1,47 +1,71 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Turista VERSION 0.1 LANGUAGES CXX)
+project(FinalTurista1 VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-qt_standard_project_setup(REQUIRES 6.10)
+set(PROJECT_SOURCES
+        main.cpp
+        mainwindow.cpp
+        mainwindow.h
+        mainwindow.ui
+)
 
-# Content of downloaded design from Figma to Qt or similar
-if (EXISTS "${CMAKE_CURRENT_LIST_DIR}/importedcontent/CMakeLists.txt")
-    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/importedcontent)
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(FinalTurista1
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+        searchwidget.h searchwidget.cpp
+    )
+# Define target properties for Android with Qt 6 as:
+#    set_property(TARGET FinalTurista1 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
+# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+else()
+    if(ANDROID)
+        add_library(FinalTurista1 SHARED
+            ${PROJECT_SOURCES}
+        )
+# Define properties for Android with Qt 5 after find_package() calls as:
+#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+    else()
+        add_executable(FinalTurista1
+            ${PROJECT_SOURCES}
+        )
+    endif()
 endif()
 
-qt_add_executable(appTurista
-    main.cpp
-)
-
-qt_add_qml_module(appTurista
-    URI Turista
-    QML_FILES
-        Main.qml
-        QML_FILES LoginPage.qml
-        QML_FILES AccountCreation.qml
-)
+target_link_libraries(FinalTurista1 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
-set_target_properties(appTurista PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appTurista
+if(${QT_VERSION} VERSION_LESS 6.1.0)
+  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.FinalTurista1)
+endif()
+set_target_properties(FinalTurista1 PROPERTIES
+    ${BUNDLE_ID_OPTION}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-target_link_libraries(appTurista
-    PRIVATE Qt6::Quick
-)
-
-install(TARGETS appTurista
+include(GNUInstallDirs)
+install(TARGETS FinalTurista1
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(FinalTurista1)
+endif()
