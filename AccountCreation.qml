@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
+import Turista
 
 
 GridLayout {
@@ -204,6 +205,9 @@ GridLayout {
                         formError.visible = true
                         return
                     }
+
+                    User.setUsername(createUsername.text)
+                    User.setPassword(createPassword.text)
 
                     window.lightMode = !window.lightMode
                     pageStack.pop()
