@@ -142,82 +142,116 @@ GridLayout {
             }
 
 
-            Button {
-                id: login
-                text: "Create Account"
-
+            RowLayout {
                 Layout.topMargin: -8
                 Layout.alignment: Qt.AlignHCenter
+                spacing: 10
 
-                contentItem: Text {
-                    text: login.text
-                    font: login.font
-                    color: "White"
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
+                Button {
+                    id: backButton
+                    text: "Back"
 
-                background: Rectangle {
-                    implicitWidth: 120
-                    implicitHeight: 36
-                    radius: 8
+                    contentItem: Text {
+                        text: backButton.text
+                        font: backButton.font
+                        color: "White"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
 
-                    color: login.down ? "#333333" : "black"
+                    background: Rectangle {
+                        implicitWidth: 120
+                        implicitHeight: 36
+                        radius: 8
 
-                    scale: login.down ? 0.97 : 1.0
+                        color: backButton.down ? "#333333" : "black"
+                        scale: backButton.down ? 0.97 : 1.0
 
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 100
+                        Behavior on color {
+                            ColorAnimation { duration: 100 }
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation { duration: 100 }
                         }
                     }
 
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 100
+                    onClicked: grid.pageStack.pop()
+                }
+
+                Button {
+                    id: login
+                    text: "Create Account"
+
+                    contentItem: Text {
+                        text: login.text
+                        font: login.font
+                        color: "White"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    background: Rectangle {
+                        implicitWidth: 120
+                        implicitHeight: 36
+                        radius: 8
+
+                        color: login.down ? "#333333" : "black"
+
+                        scale: login.down ? 0.97 : 1.0
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 100
+                            }
+                        }
+
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 100
+                            }
                         }
                     }
+
+                    onClicked: {
+                        formError.visible = false
+                        if (createPassword.text.trim().length === 0 && createUsername.text.trim().length === 0)
+                        {
+                            formError.text = "Enter username and password"
+                            formError.visible = true
+                            return
+                        }
+
+                        else if (createPassword.text !== reenterPassword.text)
+                        {
+                            formError.text = "Passwords do not match"
+                            formError.visible = true
+                            return
+                        }
+                        else if (createPassword.text.trim().length === 0)
+                        {
+                            formError.text = "Enter a password"
+                            formError.visible = true
+                            return
+                        }
+                        else if (createUsername.text.trim().length === 0)
+                        {
+                            formError.text = "Enter a username"
+                            formError.visible = true
+                            return
+                        }
+
+                        if (!UserManager.registerUser(createUsername.text, createPassword.text))
+                        {
+                            formError.text = "Username already exists"
+                            formError.visible = true
+                            return
+                        }
+
+                        grid.appWindow.lightMode = !grid.appWindow.lightMode
+                        grid.pageStack.pop()
+                    }
                 }
-
-                onClicked: {
-                    formError.visible = false
-                    if (createPassword.text.trim().length === 0 && createUsername.text.trim().length === 0)
-                    {
-                        formError.text = "Enter username and password"
-                        formError.visible = true
-                        return
-                    }
-
-                    else if (createPassword.text !== reenterPassword.text)
-                    {
-                        formError.text = "Passwords do not match"
-                        formError.visible = true
-                        return
-                    }
-                    else if (createPassword.text.trim().length === 0)
-                    {
-                        formError.text = "Enter a password"
-                        formError.visible = true
-                        return
-                    }
-                    else if (createUsername.text.trim().length === 0)
-                    {
-                        formError.text = "Enter a username"
-                        formError.visible = true
-                        return
-                    }
-
-                    if (!UserManager.registerUser(createUsername.text, createPassword.text))
-                    {
-                        formError.text = "Username already exists"
-                        formError.visible = true
-                        return
-                    }
-
-                    grid.appWindow.lightMode = !grid.appWindow.lightMode
-                    grid.pageStack.pop()
-                }
-
             }
         }
     }
