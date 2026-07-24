@@ -207,10 +207,12 @@ GridLayout {
                         return
                     }
 
-                    User.username = createUsername.text
-                    User.password = createPassword.text
-                    console.log("Username is " + User.username)
-                    console.log("Password is " + User.password)
+                    if (!UserManager.registerUser(createUsername.text, createPassword.text))
+                    {
+                        formError.text = "Username already exists"
+                        formError.visible = true
+                        return
+                    }
 
                     grid.appWindow.lightMode = !grid.appWindow.lightMode
                     grid.pageStack.pop()

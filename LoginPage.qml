@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
+import Turista
 
 Rectangle {
     id: root
@@ -107,6 +108,14 @@ Rectangle {
                     }
                 }
 
+                Label {
+                    id: loginError
+                    color: "red"
+                    font.pixelSize: 14
+                    visible: false
+                    Layout.alignment: Qt.AlignCenter
+                }
+
                 Button {
                     id: login
                     text: "Login"
@@ -145,6 +154,16 @@ Rectangle {
                     }
 
                     onClicked: {
+                        loginError.visible = false
+
+                        if (!UserManager.authenticate(username.text, password.text))
+                        {
+                            loginError.text = "Username or password is incorrect"
+                            loginError.visible = true
+                            return
+                        }
+
+                        User.username = username.text
                         root.appWindow.lightMode = !root.appWindow.lightMode
                         root.pageStack.push("SearchPage.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
                     }
