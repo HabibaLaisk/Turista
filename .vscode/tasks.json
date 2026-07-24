@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "CMake: build (qt-mingw-debug)",
+      "command": "C:/Qt/Tools/CMake_64/bin/cmake.exe",
+      "args": ["--build", "--preset", "qt-mingw-debug"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Build appTurista using the qt-mingw-debug CMake preset"
+    }
+  ]
+}

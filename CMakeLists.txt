@@ -23,6 +23,7 @@ qt_add_qml_module(appTurista
         Main.qml
         QML_FILES LoginPage.qml
         QML_FILES AccountCreation.qml
+        QML_FILES SearchPage.qml
         SOURCES User.h
         SOURCES User.cpp
 )

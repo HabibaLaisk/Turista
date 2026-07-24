@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic
 
@@ -28,6 +29,7 @@ ApplicationWindow {
 
         LoginPage {
             pageStack: stackView
+            appWindow: window
         }
     }
 }

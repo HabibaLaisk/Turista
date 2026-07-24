@@ -11,6 +11,7 @@ GridLayout {
     columnSpacing: 0
 
     property StackView pageStack
+    property var appWindow
 
 
     Rectangle {
@@ -27,7 +28,7 @@ GridLayout {
 
             Label {
                 id: text1
-                color: window.dark
+                color: grid.appWindow.dark
                 font.pixelSize: 120
                 fontSizeMode: Text.Fit
                 text: qsTr("Account Creation")
@@ -43,7 +44,7 @@ GridLayout {
 
     Rectangle {
         id: rectangleRight
-        color: window.light
+        color: grid.appWindow.light
         Layout.fillHeight: true
         Layout.fillWidth: true
 
@@ -206,11 +207,13 @@ GridLayout {
                         return
                     }
 
-                    User.setUsername(createUsername.text)
-                    User.setPassword(createPassword.text)
+                    User.username = createUsername.text
+                    User.password = createPassword.text
+                    console.log("Username is " + User.username)
+                    console.log("Password is " + User.password)
 
-                    window.lightMode = !window.lightMode
-                    pageStack.pop()
+                    grid.appWindow.lightMode = !grid.appWindow.lightMode
+                    grid.pageStack.pop()
                 }
 
             }

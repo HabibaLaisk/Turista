@@ -1,0 +1,13 @@
+{
+  "cmake.cmakePath": "C:/Qt/Tools/CMake_64/bin/cmake.exe",
+  "cmake.useCMakePresets": "always",
+  "cmake.configureOnOpen": true,
+  "cmake.defaultConfigurePreset": "qt-mingw-debug",
+  "cmake.defaultBuildPreset": "qt-mingw-debug",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "qt-qml.qmlls.additionalImportPaths": [
+    "C:/Qt/6.11.1/mingw_64/qml",
+    "${workspaceFolder}/build/vscode-mingw-debug",
+    "${workspaceFolder}/build/vscode-mingw-debug/Turista"
+  ]
+}

@@ -6,6 +6,7 @@ Rectangle {
     id: root
 
     property StackView pageStack
+    property var appWindow
 
     GridLayout {
         id: grid
@@ -28,7 +29,7 @@ Rectangle {
 
                 Label {
                     id: text1
-                    color: window.dark
+                    color: root.appWindow.dark
                     font.pixelSize: 120
                     fontSizeMode: Text.Fit
                     text: qsTr("Welcome")
@@ -43,7 +44,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleRight
-            color: window.light
+            color: root.appWindow.light
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -143,7 +144,10 @@ Rectangle {
                         }
                     }
 
-                    onClicked: window.lightMode = !window.lightMode
+                    onClicked: {
+                        root.appWindow.lightMode = !root.appWindow.lightMode
+                        root.pageStack.push("SearchPage.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
+                    }
                 }
 
 
@@ -172,7 +176,7 @@ Rectangle {
                         }
 
                         onClicked: {
-                            pageStack.push("AccountCreation.qml", { pageStack: pageStack })
+                            root.pageStack.push("AccountCreation.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
                         }
                     }
 
