@@ -81,42 +81,78 @@ Rectangle {
             }
         }
 
-        Button {
-            id: searchButton
-            text: "Search"
+        RowLayout {
             Layout.alignment: Qt.AlignHCenter
+            spacing: 10
 
-            contentItem: Text {
-                text: searchButton.text
-                font: searchButton.font
-                color: "White"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
+            Button {
+                id: backButton
+                text: "Back"
 
-            background: Rectangle {
-                implicitWidth: 120
-                implicitHeight: 36
-                radius: 8
-
-                color: searchButton.down ? "#333333" : "black"
-                scale: searchButton.down ? 0.97 : 1.0
-
-                Behavior on color {
-                    ColorAnimation { duration: 100 }
+                contentItem: Text {
+                    text: backButton.text
+                    font: backButton.font
+                    color: "White"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
                 }
 
-                Behavior on scale {
-                    NumberAnimation { duration: 100 }
+                background: Rectangle {
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+
+                    color: backButton.down ? "#333333" : "black"
+                    scale: backButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
                 }
+
+                onClicked: root.pageStack.pop()
             }
 
-            onClicked: {
-                console.log("Search requested:")
-                console.log("City:", destination.text)
-                console.log("Arrive:", arrive.text)
-                console.log("Depart:", depart.text)
-                console.log("Budget:", budget.text)
+            Button {
+                id: searchButton
+                text: "Search"
+
+                contentItem: Text {
+                    text: searchButton.text
+                    font: searchButton.font
+                    color: "White"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                background: Rectangle {
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+
+                    color: searchButton.down ? "#333333" : "black"
+                    scale: searchButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
+                }
+
+                onClicked: {
+                    console.log("Search requested:")
+                    console.log("City:", destination.text)
+                    console.log("Arrive:", arrive.text)
+                    console.log("Depart:", depart.text)
+                    console.log("Budget:", budget.text)
+                }
             }
         }
 
