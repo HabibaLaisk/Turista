@@ -3,7 +3,7 @@
 #include <QString>
 
 struct SearchResult
-{ 
+{
     QString id;
     QString title;
     QString category;
@@ -14,5 +14,5 @@ struct SearchResult
     QString imageUrl;
     QString source;
     QString url;
+    double rating = 0.0;
 };
-

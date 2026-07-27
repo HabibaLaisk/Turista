@@ -43,7 +43,7 @@ Rectangle {
 
         TextField {
             id: arrive
-            placeholderText: "Arrive date"
+            placeholderText: "Arrive date (YYYY-MM-DD)"
             Layout.fillWidth: true
 
             background: Rectangle {
@@ -56,7 +56,7 @@ Rectangle {
 
         TextField {
             id: depart
-            placeholderText: "Depart date"
+            placeholderText: "Arrive date (YYYY-MM-DD)"
             Layout.fillWidth: true
 
             background: Rectangle {
@@ -79,6 +79,21 @@ Rectangle {
                 border.width: 1
                 color: "white"
             }
+        }
+        ComboBox {
+            id: category
+            Layout.fillWidth: true
+
+            model: [
+                "All",
+                "Music",
+                "Sports",
+                "Arts & Theatre",
+                "Family",
+                "Food",
+                "Restaurants",
+                "Attractions"
+            ]
         }
 
         RowLayout {
@@ -147,13 +162,31 @@ Rectangle {
                 }
 
                 onClicked: {
-                    console.log("Search requested:")
-                    console.log("City:", destination.text)
-                    console.log("Arrive:", arrive.text)
-                    console.log("Depart:", depart.text)
-                    console.log("Budget:", budget.text)
+                    const budgetAmount = Number(budget.text)
+
+                    if (isNaN(budgetAmount) || budgetAmount < 0) {
+                        statusLabel.text = "Please enter a valid budget."
+                        return
+                    }
+
+                    apiService.search(
+                        destination.text,
+                        arrive.text,
+                        depart.text,
+                        budgetAmount,
+                        category.currentText
+                    )
                 }
             }
+        }
+
+        Label {
+            id: statusLabel
+            text: ""
+            color: "white"
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
         }
 
         Flow {
@@ -183,6 +216,36 @@ Rectangle {
                     onClicked: destination.text = modelData
                 }
             }
+        }
+    }
+    Connections {
+        target: apiService
+
+        function onSearchStarted() {
+            statusLabel.text = "Searching..."
+            searchButton.enabled = false
+        }
+
+        function onResultsReady(results) {
+            searchButton.enabled = true
+            statusLabel.text = results.length
+                    + " results found."
+
+            console.log("Results received:", results.length)
+
+            for (let i = 0; i < results.length; i++) {
+                console.log(
+                    results[i].source,
+                    results[i].title,
+                    results[i].location
+                )
+            }
+        }
+
+        function onSearchFailed(message) {
+            searchButton.enabled = true
+            statusLabel.text = message
+            console.log("Search failed:", message)
         }
     }
 }
