@@ -1,11 +1,13 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic
+import Turista
 
 Rectangle {
     id: root
 
     property StackView pageStack
+    property var appWindow
 
     GridLayout {
         id: grid
@@ -26,7 +28,7 @@ Rectangle {
 
                 Label {
                     id: text1
-                    color: window.dark
+                    color: root.appWindow.dark
                     font.pixelSize: 120
                     fontSizeMode: Text.Fit
                     text: qsTr("Welcome")
@@ -41,7 +43,7 @@ Rectangle {
 
         Rectangle {
             id: rectangleRight
-            color: window.light
+            color: root.appWindow.light
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -101,6 +103,14 @@ Rectangle {
                     }
                 }
 
+                Label {
+                    id: loginError
+                    color: "red"
+                    font.pixelSize: 14
+                    visible: false
+                    Layout.alignment: Qt.AlignCenter
+                }
+
                 Button {
                     id: login
                     text: "Login"
@@ -138,7 +148,20 @@ Rectangle {
                         }
                     }
 
-                    onClicked: window.lightMode = !window.lightMode
+                    onClicked: {
+                        loginError.visible = false
+
+                        if (!UserManager.authenticate(username.text, password.text))
+                        {
+                            loginError.text = "Username or password is incorrect"
+                            loginError.visible = true
+                            return
+                        }
+
+                        User.username = username.text
+                        root.appWindow.lightMode = !root.appWindow.lightMode
+                        root.pageStack.push("SearchPage.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
+                    }
                 }
 
                 RowLayout {
@@ -166,7 +189,7 @@ Rectangle {
                         }
 
                         onClicked: {
-                            pageStack.push("AccountCreation.qml", { pageStack: pageStack })
+                            root.pageStack.push("AccountCreation.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
                         }
                     }
 
