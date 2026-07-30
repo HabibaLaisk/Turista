@@ -16,7 +16,7 @@ GridLayout {
 
     Rectangle {
         id: rectangleLeft
-        color: "white"
+        color: "#fbf3e6"
         Layout.fillHeight: true
         Layout.fillWidth: true
 
@@ -154,7 +154,7 @@ GridLayout {
                     contentItem: Text {
                         text: backButton.text
                         font: backButton.font
-                        color: "White"
+                        color: "#2b211a"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -163,8 +163,10 @@ GridLayout {
                         implicitWidth: 120
                         implicitHeight: 36
                         radius: 8
+                        border.color: "#d8c6ac"
+                        border.width: 1
 
-                        color: backButton.down ? "#333333" : "black"
+                        color: backButton.down ? "#d8c6ac" : "#e4d6c3"
                         scale: backButton.down ? 0.97 : 1.0
 
                         Behavior on color {
@@ -186,7 +188,7 @@ GridLayout {
                     contentItem: Text {
                         text: login.text
                         font: login.font
-                        color: "White"
+                        color: "#2b1a12"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -196,7 +198,7 @@ GridLayout {
                         implicitHeight: 36
                         radius: 8
 
-                        color: login.down ? "#333333" : "black"
+                        color: login.down ? "#e1502f" : "#ff6b4a"
 
                         scale: login.down ? 0.97 : 1.0
 

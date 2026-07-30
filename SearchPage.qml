@@ -5,7 +5,7 @@ import QtQuick.Controls.Basic
 
 Rectangle {
     id: root
-    color: appWindow ? appWindow.reallyDark : "#1f1f1f"
+    color: appWindow ? appWindow.reallyDark : "#f0e4d0"
 
     property StackView pageStack
     property var appWindow
@@ -21,7 +21,7 @@ Rectangle {
 
         Label {
             text: qsTr("Discover the trip that fits you")
-            color: "white"
+            color: "#2b211a"
             font.pixelSize: 28
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
@@ -107,7 +107,7 @@ Rectangle {
                     contentItem: Text {
                         text: backButton.text
                         font: backButton.font
-                        color: "White"
+                        color: "#2b211a"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -116,8 +116,10 @@ Rectangle {
                         implicitWidth: 120
                         implicitHeight: 36
                         radius: 8
+                        border.color: "#d8c6ac"
+                        border.width: 1
 
-                        color: backButton.down ? "#333333" : "black"
+                        color: backButton.down ? "#d8c6ac" : "#e4d6c3"
                         scale: backButton.down ? 0.97 : 1.0
 
                         Behavior on color {
@@ -139,7 +141,7 @@ Rectangle {
                     contentItem: Text {
                         text: searchButton.text
                         font: searchButton.font
-                        color: "White"
+                        color: "#2b1a12"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -149,7 +151,7 @@ Rectangle {
                         implicitHeight: 36
                         radius: 8
 
-                        color: searchButton.down ? "#333333" : "black"
+                        color: searchButton.down ? "#e1502f" : "#ff6b4a"
                         scale: searchButton.down ? 0.97 : 1.0
 
                         Behavior on color {
@@ -183,7 +185,7 @@ Rectangle {
             Label {
                 id: statusLabel
                 text: ""
-                color: "white"
+                color: "#2b211a"
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
@@ -204,7 +206,7 @@ Rectangle {
 
                         contentItem: Text {
                             text: cityButton.modelData
-                            color: "#0077CC"
+                            color: "#c64524"
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                         }

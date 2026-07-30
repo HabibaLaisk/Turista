@@ -5,7 +5,7 @@ import QtQuick.Controls.Basic
 
 Rectangle {
     id: root
-    color: appWindow ? appWindow.reallyDark : "#1f1f1f"
+    color: appWindow ? appWindow.reallyDark : "#f0e4d0"
 
     property StackView pageStack
     property var appWindow
@@ -27,7 +27,7 @@ Rectangle {
                 contentItem: Text {
                     text: backButton.text
                     font: backButton.font
-                    color: "White"
+                    color: "#2b211a"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -36,8 +36,10 @@ Rectangle {
                     implicitWidth: 120
                     implicitHeight: 36
                     radius: 8
+                    border.color: "#d8c6ac"
+                    border.width: 1
 
-                    color: backButton.down ? "#333333" : "black"
+                    color: backButton.down ? "#d8c6ac" : "#e4d6c3"
                     scale: backButton.down ? 0.97 : 1.0
 
                     Behavior on color {
@@ -54,10 +56,40 @@ Rectangle {
 
             Label {
                 text: root.results.length + " results found"
-                color: "white"
+                color: "#2b211a"
                 font.pixelSize: 20
                 font.bold: true
                 Layout.fillWidth: true
+            }
+
+            Button {
+                id: profileButton
+                text: "Profile"
+
+                contentItem: Text {
+                    text: profileButton.text
+                    font: profileButton.font
+                    color: "#2b1a12"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                background: Rectangle {
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+
+                    color: profileButton.down ? "#e1502f" : "#ff6b4a"
+                    scale: profileButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
+                }
             }
         }
 
@@ -92,8 +124,8 @@ Rectangle {
             width: GridView.view ? GridView.view.cellWidth - 12 : 220
             height: GridView.view ? GridView.view.cellHeight - 12 : 240
             radius: 10
-            color: "#2a2a2a"
-            border.color: "#3a3a3a"
+            color: "#fbf3e6"
+            border.color: "#e6d7c0"
             border.width: 1
             clip: true
 
@@ -118,7 +150,7 @@ Rectangle {
 
                     Rectangle {
                         radius: 4
-                        color: card.source === "Yelp" ? "#d32323" : "#0077CC"
+                        color: card.source === "Yelp" ? "#d32323" : "#1b7a72"
                         implicitWidth: sourceLabel.implicitWidth + 10
                         implicitHeight: sourceLabel.implicitHeight + 4
 
@@ -136,15 +168,16 @@ Rectangle {
 
                     Text {
                         text: "★ " + card.rating.toFixed(1)
-                        color: "#e3ac3a"
+                        color: "#8c6a1f"
                         font.pixelSize: 12
+                        font.bold: true
                         visible: card.rating > 0
                     }
                 }
 
                 Text {
                     text: card.title
-                    color: "white"
+                    color: "#2b211a"
                     font.pixelSize: 14
                     font.bold: true
                     wrapMode: Text.WordWrap
@@ -157,7 +190,7 @@ Rectangle {
                     text: [card.category, card.price]
                         .filter(function (s) { return s.length > 0 })
                         .join(" · ")
-                    color: "#9a9a9a"
+                    color: "#8a7563"
                     font.pixelSize: 11
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
@@ -166,7 +199,7 @@ Rectangle {
 
                 Text {
                     text: card.date
-                    color: "#9a9a9a"
+                    color: "#8a7563"
                     font.pixelSize: 11
                     visible: card.date.length > 0
                     Layout.fillWidth: true
@@ -174,7 +207,7 @@ Rectangle {
 
                 Text {
                     text: card.location
-                    color: "#9a9a9a"
+                    color: "#8a7563"
                     font.pixelSize: 11
                     wrapMode: Text.WordWrap
                     maximumLineCount: 2
@@ -186,7 +219,7 @@ Rectangle {
 
                 Text {
                     text: "View ↗"
-                    color: "#0077CC"
+                    color: "#c64524"
                     font.pixelSize: 11
                     font.bold: true
                     visible: card.url.length > 0

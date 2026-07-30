@@ -201,7 +201,13 @@ void ApiService::searchTicketmaster(
                 result.date = localDate;
 
                 if (!localTime.isEmpty()) {
-                    result.date += " " + localTime;
+                    const QTime time =
+                        QTime::fromString(localTime, "HH:mm:ss");
+
+                    result.date += " "
+                        + (time.isValid()
+                               ? time.toString("h:mm AP")
+                               : localTime);
                 }
 
                 const QJsonArray venues =
