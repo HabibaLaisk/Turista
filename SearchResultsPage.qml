@@ -90,6 +90,7 @@ Rectangle {
                         NumberAnimation { duration: 100 }
                     }
                 }
+                onClicked: root.pageStack.push("ProfilePage.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
             }
         }
 
@@ -110,6 +111,7 @@ Rectangle {
 
         Rectangle {
             id: card
+            required property string id
             required property string title
             required property string category
             required property string location
@@ -120,6 +122,7 @@ Rectangle {
             required property string source
             required property string url
             required property real rating
+            property bool isFavorited: false
 
             width: GridView.view ? GridView.view.cellWidth - 12 : 220
             height: GridView.view ? GridView.view.cellHeight - 12 : 240
@@ -173,6 +176,29 @@ Rectangle {
                         font.bold: true
                         visible: card.rating > 0
                     }
+                    Text {
+                                        text: card.isFavorited ? "♥" : "♡"
+                                        color: card.isFavorited ? "#d32323" : "#8a7563"
+                                        font.pixelSize: 16
+
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: {
+                                           if (card.isFavorited) {
+                                           UserManager.removeFavorite(User.username, card.id)
+                                           card.isFavorited = false
+                                         } else {
+                                           UserManager.addFavorite(User.username, card.id, card.title,
+                                           card.category, card.location, card.date, card.price,
+                                           card.description, card.imageUrl, card.source, card.url, card.rating)
+                                           card.isFavorited = true
+                                        }
+                                        console.log("Favorites now:", JSON.stringify(UserManager.getFavorites(User.username)))
+                                                }
+                                        }
+                                    }
+
                 }
 
                 Text {

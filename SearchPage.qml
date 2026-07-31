@@ -28,198 +28,230 @@ Rectangle {
             Layout.fillWidth: true
         }
 
-            TextField {
-                id: destination
-                placeholderText: "Destination city (e.g. Austin, TX)"
-                Layout.fillWidth: true
+        TextField {
+            id: destination
+            placeholderText: "Destination city (e.g. Austin, TX)"
+            Layout.fillWidth: true
+
+            background: Rectangle {
+                radius: 5
+                border.color: "gray"
+                border.width: 1
+                color: "white"
+            }
+        }
+
+        TextField {
+            id: arrive
+            placeholderText: "Arrive date (YYYY-MM-DD)"
+            Layout.fillWidth: true
+
+            background: Rectangle {
+                radius: 5
+                border.color: "gray"
+                border.width: 1
+                color: "white"
+            }
+        }
+
+        TextField {
+            id: depart
+            placeholderText: "Arrive date (YYYY-MM-DD)"
+            Layout.fillWidth: true
+
+            background: Rectangle {
+                radius: 5
+                border.color: "gray"
+                border.width: 1
+                color: "white"
+            }
+        }
+
+        TextField {
+            id: budget
+            text: "500"
+            placeholderText: "Budget (USD)"
+            Layout.fillWidth: true
+
+            background: Rectangle {
+                radius: 5
+                border.color: "gray"
+                border.width: 1
+                color: "white"
+            }
+        }
+        ComboBox {
+            id: category
+            Layout.fillWidth: true
+
+            model: [
+                "All",
+                "Music",
+                "Sports",
+                "Arts & Theatre",
+                "Family",
+                "Food",
+                "Restaurants",
+                "Attractions"
+            ]
+        }
+
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 10
+
+            Button {
+                id: backButton
+                text: "Back"
+
+                contentItem: Text {
+                    text: backButton.text
+                    font: backButton.font
+                    color: "#2b211a"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
 
                 background: Rectangle {
-                    radius: 5
-                    border.color: "gray"
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+                    border.color: "#d8c6ac"
                     border.width: 1
-                    color: "white"
+
+                    color: backButton.down ? "#d8c6ac" : "#e4d6c3"
+                    scale: backButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
+                }
+
+                onClicked: root.pageStack.pop()
+            }
+
+            Button {
+                id: searchButton
+                text: "Search"
+
+                contentItem: Text {
+                    text: searchButton.text
+                    font: searchButton.font
+                    color: "#2b1a12"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                background: Rectangle {
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+
+                    color: searchButton.down ? "#e1502f" : "#ff6b4a"
+                    scale: searchButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
+                }
+
+                onClicked: {
+                    const budgetAmount = Number(budget.text)
+
+                    if (isNaN(budgetAmount) || budgetAmount < 0) {
+                        statusLabel.text = "Please enter a valid budget."
+                        return
+                    }
+
+                    apiService.search(
+                        destination.text,
+                        arrive.text,
+                        depart.text,
+                        budgetAmount,
+                        category.currentText
+                    )
                 }
             }
 
-            TextField {
-                id: arrive
-                placeholderText: "Arrive date (YYYY-MM-DD)"
-                Layout.fillWidth: true
+            Button {
+                id: profileButton
+                text: "Profile"
+
+                contentItem: Text {
+                    text: profileButton.text
+                    font: profileButton.font
+                    color: "#2b1a12"
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
 
                 background: Rectangle {
-                    radius: 5
-                    border.color: "gray"
-                    border.width: 1
-                    color: "white"
+                    implicitWidth: 120
+                    implicitHeight: 36
+                    radius: 8
+
+                    color: profileButton.down ? "#e1502f" : "#ff6b4a"
+                    scale: profileButton.down ? 0.97 : 1.0
+
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
                 }
+
+                onClicked: root.pageStack.push("ProfilePage.qml", { pageStack: root.pageStack, appWindow: root.appWindow })
             }
+        }
 
-            TextField {
-                id: depart
-                placeholderText: "Arrive date (YYYY-MM-DD)"
-                Layout.fillWidth: true
+        Label {
+            id: statusLabel
+            text: ""
+            color: "#2b211a"
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+        }
 
-                background: Rectangle {
-                    radius: 5
-                    border.color: "gray"
-                    border.width: 1
-                    color: "white"
-                }
-            }
+        Flow {
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+            spacing: 8
 
-            TextField {
-                id: budget
-                text: "500"
-                placeholderText: "Budget (USD)"
-                Layout.fillWidth: true
-
-                background: Rectangle {
-                    radius: 5
-                    border.color: "gray"
-                    border.width: 1
-                    color: "white"
-                }
-            }
-            ComboBox {
-                id: category
-                Layout.fillWidth: true
-
-                model: [
-                    "All",
-                    "Music",
-                    "Sports",
-                    "Arts & Theatre",
-                    "Family",
-                    "Food",
-                    "Restaurants",
-                    "Attractions"
-                ]
-            }
-
-            RowLayout {
-                Layout.alignment: Qt.AlignHCenter
-                spacing: 10
+            Repeater {
+                model: root.popularCities
 
                 Button {
-                    id: backButton
-                    text: "Back"
+                    id: cityButton
+                    required property string modelData
+                    text: modelData
 
                     contentItem: Text {
-                        text: backButton.text
-                        font: backButton.font
-                        color: "#2b211a"
+                        text: cityButton.modelData
+                        color: "#c64524"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
 
                     background: Rectangle {
-                        implicitWidth: 120
-                        implicitHeight: 36
-                        radius: 8
-                        border.color: "#d8c6ac"
-                        border.width: 1
-
-                        color: backButton.down ? "#d8c6ac" : "#e4d6c3"
-                        scale: backButton.down ? 0.97 : 1.0
-
-                        Behavior on color {
-                            ColorAnimation { duration: 100 }
-                        }
-
-                        Behavior on scale {
-                            NumberAnimation { duration: 100 }
-                        }
+                        color: "transparent"
                     }
 
-                    onClicked: root.pageStack.pop()
-                }
-
-                Button {
-                    id: searchButton
-                    text: "Search"
-
-                    contentItem: Text {
-                        text: searchButton.text
-                        font: searchButton.font
-                        color: "#2b1a12"
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-
-                    background: Rectangle {
-                        implicitWidth: 120
-                        implicitHeight: 36
-                        radius: 8
-
-                        color: searchButton.down ? "#e1502f" : "#ff6b4a"
-                        scale: searchButton.down ? 0.97 : 1.0
-
-                        Behavior on color {
-                            ColorAnimation { duration: 100 }
-                        }
-
-                        Behavior on scale {
-                            NumberAnimation { duration: 100 }
-                        }
-                    }
-
-                    onClicked: {
-                        const budgetAmount = Number(budget.text)
-
-                        if (isNaN(budgetAmount) || budgetAmount < 0) {
-                            statusLabel.text = "Please enter a valid budget."
-                            return
-                        }
-
-                        apiService.search(
-                            destination.text,
-                            arrive.text,
-                            depart.text,
-                            budgetAmount,
-                            category.currentText
-                        )
-                    }
-                }
-            }
-
-            Label {
-                id: statusLabel
-                text: ""
-                color: "#2b211a"
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-                Layout.fillWidth: true
-            }
-
-            Flow {
-                Layout.fillWidth: true
-                Layout.topMargin: 10
-                spacing: 8
-
-                Repeater {
-                    model: root.popularCities
-
-                    Button {
-                        id: cityButton
-                        required property string modelData
-                        text: modelData
-
-                        contentItem: Text {
-                            text: cityButton.modelData
-                            color: "#c64524"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                        }
-
-                        background: Rectangle {
-                            color: "transparent"
-                        }
-
-                        onClicked: destination.text = modelData
-                    }
+                    onClicked: destination.text = modelData
                 }
             }
         }
+    }
     Connections {
         target: apiService
 

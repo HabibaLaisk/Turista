@@ -260,10 +260,9 @@ Rectangle {
                         }
                     }
 
-                    // --- TEMP: for testing ProfilePage, remove before merging ---
                     Button {
                         id: viewProfile
-                        text: "View Profile (test)"
+                        text: "View Profile"
                         Layout.alignment: Qt.AlignHCenter
 
                         background: Rectangle {
@@ -272,7 +271,7 @@ Rectangle {
 
                         contentItem: Text {
                             text: viewProfile.text
-                            color: "#0077CC"
+                            color: "#c64524"
                             font.pixelSize: 14
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
