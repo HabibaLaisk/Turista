@@ -49,33 +49,33 @@ Before running the project make sure the following are installed:
 1. Clone the repository.
 
 ```bash
-git clone https://github.com/HabibaLaisk/Turista.git
+git clone --branch main https://github.com/HabibaLaisk/Turista.git Turista2
 ```
 
-2. Open Qt Creator.
+2. Put Qt's cmake and mingw compiler on PATH for this session.
+'''bash
+export PATH="/c/Qt/Tools/CMake_64/bin:/c/Qt/Tools/mingw1310_64/bin:$PATH"
+'''
 
-3. Open the project's `CMakeLists.txt` file.
+3. Configure the build (Ninja + mingw + the Qt kit).
+'''bash
+  cmake -S Turista2 -B Turista2/build \
+    -G Ninja \
+    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_PREFIX_PATH=C:/Qt/6.11.1/mingw_64 \
+    -DCMAKE_C_COMPILER=C:/Qt/Tools/mingw1310_64/bin/gcc.exe \
+    -DCMAKE_CXX_COMPILER=C:/Qt/Tools/mingw1310_64/bin/g++.exe
+'''
 
-4. Select the Qt Desktop Kit.
+4. Build.
+'''bash
+cmake --build Turista2/build
+'''
 
-5. Configure the project.
-
-6. In Qt Creator, go to:
-
-```
-Projects → Run → Environment
-```
-
-7. Add the following environment variables:
-
-```
-TICKETMASTER_API_KEY=YOUR_TICKETMASTER_API_KEY
-YELP_API_KEY=YOUR_YELP_API_KEY
-```
-
-8. Build the project by selecting **Build → Build Project** or pressing **Ctrl + B**.
-
----
+5. Run Turista.
+'''bash
+./Turista2/build/appTurista.exe
+'''
 
 ## Running the Application
 
