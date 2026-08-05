@@ -54,7 +54,7 @@ git clone --branch main https://github.com/HabibaLaisk/Turista.git Turista2
 
 2. Put Qt's cmake and mingw compiler on PATH for this session.
 ```bash
-set PATH=C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\mingw1310_64\bin;%PATH%
+  set PATH=C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\Ninja;C:\Qt\Tools\mingw1310_64\bin;%PATH%
 ```
 
 3. Configure the build (Ninja + mingw + the Qt kit).
