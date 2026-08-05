@@ -53,29 +53,29 @@ git clone --branch main https://github.com/HabibaLaisk/Turista.git Turista2
 ```
 
 2. Put Qt's cmake and mingw compiler on PATH for this session.
-'''bash
+```bash
 export PATH="/c/Qt/Tools/CMake_64/bin:/c/Qt/Tools/mingw1310_64/bin:$PATH"
-'''
+```
 
 3. Configure the build (Ninja + mingw + the Qt kit).
-'''bash
+```bash
   cmake -S Turista2 -B Turista2/build \
     -G Ninja \
     -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_PREFIX_PATH=C:/Qt/6.11.1/mingw_64 \
     -DCMAKE_C_COMPILER=C:/Qt/Tools/mingw1310_64/bin/gcc.exe \
     -DCMAKE_CXX_COMPILER=C:/Qt/Tools/mingw1310_64/bin/g++.exe
-'''
+```
 
 4. Build.
-'''bash
+```bash
 cmake --build Turista2/build
-'''
+```
 
 5. Run Turista.
-'''bash
+```bash
 ./Turista2/build/appTurista.exe
-'''
+```
 
 ## Running the Application
 
