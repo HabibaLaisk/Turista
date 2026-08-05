@@ -56,6 +56,9 @@ git clone --branch main https://github.com/HabibaLaisk/Turista.git Turista2
 ```bash
   set PATH=C:\Qt\Tools\CMake_64\bin;C:\Qt\Tools\Ninja;C:\Qt\Tools\mingw1310_64\bin;%PATH%
 ```
+```bash
+set PATH=C:\Qt\6.11.1\mingw_64\bin;%PATH%
+```
 
 3. Configure the build (Ninja + mingw + the Qt kit).
 ```bash
@@ -65,6 +68,12 @@ git clone --branch main https://github.com/HabibaLaisk/Turista.git Turista2
     -DCMAKE_PREFIX_PATH=C:/Qt/6.11.1/mingw_64 ^
     -DCMAKE_C_COMPILER=C:/Qt/Tools/mingw1310_64/bin/gcc.exe ^
     -DCMAKE_CXX_COMPILER=C:/Qt/Tools/mingw1310_64/bin/g++.exe
+```
+```bash
+setx TICKETMASTER_API_KEY qCDDtXpGa8buGFG6uAUvA9Op3V8UfQJG
+```
+```bash
+setx YELP_API_KEY 2ytc07b1gYeLJhtcm3FQEZQrtJU_eB0is5UjK0s2HMTdm4B8PLfLHjwBmcAl12xJ5gMYQQevLC9dybtT_t_ESx2p3DPHIJb5nPB2uYZ2PBmGcl2WAwcLPnlLphRnanYx
 ```
 
 4. Build.
